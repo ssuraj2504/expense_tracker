@@ -1,21 +1,28 @@
+/* General styles for body and container */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     color: #333;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 .container {
     width: 80%;
     margin: auto;
     padding: 20px;
+    max-width: 1000px;  /* Limit the max width */
 }
 
+/* Header styling */
 h1 {
     text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
+/* Form styling */
 form {
     display: flex;
     flex-direction: column;
@@ -23,29 +30,48 @@ form {
     margin-bottom: 20px;
 }
 
-form input, form select, form button {
+form input,
+form select,
+form button {
     padding: 10px;
-    margin: 5px;
+    margin: 10px;
     width: 100%;
-    max-width: 300px;
+    max-width: 350px; /* Limit the width for form inputs */
+    font-size: 1rem;
 }
 
-button {
+form input[type="number"],
+form input[type="text"],
+form input[type="date"],
+form select {
+    width: 100%;
+}
+
+form button {
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
-button:hover {
+form button:hover {
     background-color: #45a049;
 }
 
+/* Summary Section */
 #summary {
     text-align: center;
     margin: 20px 0;
+    font-size: 1.1rem;
 }
 
+#summary p {
+    margin: 5px 0;
+}
+
+/* Transactions List */
 #transactions-list {
     margin-top: 20px;
 }
@@ -55,8 +81,100 @@ button:hover {
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    font-size: 1rem;
 }
 
 #transaction-list li span {
     font-weight: bold;
+}
+
+#transaction-list li button {
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+#transaction-list li button:hover {
+    background-color: #e04a29;
+}
+
+/* Responsive Layout using Media Queries */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    form input,
+    form select,
+    form button {
+        width: 100%;  /* Allow form elements to take full width on smaller screens */
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    #summary {
+        font-size: 1rem;
+    }
+
+    #transaction-list li {
+        font-size: 0.9rem;
+        flex-direction: column;
+        text-align: left;
+        padding: 15px;
+    }
+
+    #transaction-list li span {
+        margin-bottom: 5px;
+    }
+
+    #transaction-list li button {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    /* Add some padding to the container */
+    .container {
+        padding: 15px;
+    }
+
+    /* Reduce chart size for smaller screens */
+    canvas#chart {
+        width: 100% !important;
+        max-width: 500px;
+        height: auto;
+    }
+}
+
+/* Mobile-friendly styles for even smaller screens (phones) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    form button {
+        padding: 12px 20px;
+    }
+
+    #summary {
+        font-size: 0.9rem;
+    }
+
+    /* Smaller font size for transactions list */
+    #transaction-list li {
+        font-size: 0.8rem;
+    }
+
+    /* Make sure form fields take full width on small screens */
+    form input,
+    form select {
+        font-size: 0.9rem;
+    }
+
+    /* Reduce the max width of the container for extra small screens */
+    .container {
+        width: 95%;
+    }
 }

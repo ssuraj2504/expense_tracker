@@ -8,6 +8,12 @@ document.getElementById('transaction-form').addEventListener('submit', function(
     const date = document.getElementById('date').value;
     const category = document.getElementById('category').value;
 
+    // Validation: Prevent zero or negative amounts
+    if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount greater than zero.");
+        return;
+    }
+
     // Create a transaction object
     const transaction = {
         amount: amount,
@@ -35,6 +41,11 @@ function updateTransactionsList() {
     const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
     const transactionList = document.getElementById('transaction-list');
     transactionList.innerHTML = '';
+
+    if (transactions.length === 0) {
+        transactionList.innerHTML = "<p style='text-align:center;'>No transactions found</p>";
+        return;
+    }
 
     transactions.forEach((transaction, index) => {
         const li = document.createElement('li');
@@ -66,22 +77,25 @@ function updateSummary() {
 
     const balance = totalIncome - totalExpense;
 
-    // Update summary fields
-    document.getElementById('total-income').innerText = totalIncome.toFixed(2);
-    document.getElementById('total-expense').innerText = totalExpense.toFixed(2);
-    document.getElementById('balance').innerText = balance.toFixed(2);
+    // Update summary fields and handle empty cases
+    document.getElementById('total-income').innerText = totalIncome.toFixed(2) || "0.00";
+    document.getElementById('total-expense').innerText = totalExpense.toFixed(2) || "0.00";
+    document.getElementById('balance').innerText = balance.toFixed(2) || "0.00";
 }
 
 // Function to delete a transaction
 function deleteTransaction(index) {
     let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-    transactions.splice(index, 1);
-    localStorage.setItem('transactions', JSON.stringify(transactions));
 
-    // Update the transaction list and summary after deletion
-    updateTransactionsList();
-    updateSummary();
-    renderChart();
+    if (confirm("Are you sure you want to delete this transaction?")) {
+        transactions.splice(index, 1);
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+
+        // Update the transaction list and summary after deletion
+        updateTransactionsList();
+        updateSummary();
+        renderChart();
+    }
 }
 
 // Function to render the spending chart using Chart.js
@@ -97,7 +111,7 @@ function renderChart() {
     
     // Create or update the chart
     if (window.chart) {
-        window.chart.destroy(); // Destroy the previous chart if exists
+        window.chart.destroy(); // Destroy the previous chart if it exists
     }
 
     window.chart = new Chart(ctx, {

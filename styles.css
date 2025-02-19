@@ -48,7 +48,7 @@ form select {
 }
 
 form button {
-    background-color: #c0194b;
+    background-color: #28a745;;
     color: white;
     border: none;
     cursor: pointer;
@@ -57,7 +57,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: #218838;
 }
 
 /* Summary Section */
